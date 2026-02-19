@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habitto</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <div class="app-wrap">
+
+        <!-- ════════════════════════════════
+       SIDEBAR NAVIGATION
+  ════════════════════════════════ -->
+        <nav class="sidebar">
+            <div class="sidebar-logo">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 22V12M12 12C12 7 7 4 3 6c0 4 3 8 9 6M12 12c0-5 5-8 9-6 0 4-3 8-9 6" />
+                </svg>
+            </div>
+
+            <!-- Today -->
+            <button class="nav-btn active" data-page="today" title="">
+                <svg viewBox="0 0 24 24">
+                    <rect x="3" y="4" width="18" height="18" rx="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+            </button>
+            <!-- Analytics -->
+            <button class="nav-btn" data-page="analytics" title="">
+                <svg viewBox="0 0 24 24">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                </svg>
+            </button>
+            <!-- Gamification -->
+            <button class="nav-btn" data-page="gamification" title="">
+                <svg viewBox="0 0 24 24">
+                    <polygon
+                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                </svg>
+            </button>
+            <!-- Settings / Export -->
+            <button class="nav-btn" data-page="settings" title="">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="3" />
+                    <path
+                        d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
+                </svg>
+            </button>
+
+            <div class="sidebar-spacer"></div>
+
+            <!-- Theme -->
+            <button class="nav-btn" id="themeBtn" title="">
+                <svg viewBox="0 0 24 24" id="themeIco">
+                    <circle cx="12" cy="12" r="5" />
+                    <line x1="12" y1="1" x2="12" y2="3" />
+                    <line x1="12" y1="21" x2="12" y2="23" />
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                    <line x1="1" y1="12" x2="3" y2="12" />
+                    <line x1="21" y1="12" x2="23" y2="12" />
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+            </button>
+        </nav>
+
+        <!-- ════════════════════════════════
+       MAIN CONTENT
+  ════════════════════════════════ -->
+        <div class="main">
+
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <div class="page-title" id="pageTitle"></div>
+                    <div class="date-chip" id="dateBadge"></div>
+                </div>
+                <div class="topbar-right">
+                    <div class="lang-sw">
+                        <button class="lang-btn" data-lang="uk">УКР</button>
+                        <button class="lang-btn active" data-lang="ru">РУС</button>
+                        <button class="lang-btn" data-lang="en">ENG</button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- ══════════════════════
+         PAGE: TODAY
+    ══════════════════════ -->
+            <section class="page active" id="page-today">
+
+                <!-- Hero ring -->
+                <div class="hero">
+                    <svg width="0" height="0" style="position:absolute">
+                        <defs>
+                            <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="0">
+                                <stop offset="0%" stop-color="#6c5ce7" />
+                                <stop offset="100%" stop-color="#fd79a8" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="hero-row">
+                        <div class="hero-text">
+                            <h2 id="heroGreeting"></h2>
+                            <p id="heroSub"></p>
+                        </div>
+                        <div class="hero-ring">
+                            <svg viewBox="0 0 88 88">
+                                <circle class="ring-bg" cx="44" cy="44" r="40" />
+                                <circle class="ring-fill" cx="44" cy="44" r="40" id="ringFill" />
+                            </svg>
+                            <div class="hero-ring-label">
+                                <div class="ring-pct" id="ringPct">0%</div>
+                                <div class="ring-sub" data-i18n="statToday"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- XP Bar -->
+                <div class="xp-bar-card">
+                    <div class="xp-level-badge" id="xpLevelBadge">1</div>
+                    <div class="xp-info">
+                        <div class="xp-label-row">
+                            <div class="xp-level-name" id="xpLevelName"></div>
+                            <div class="xp-pts" id="xpPts"></div>
+                        </div>
+                        <div class="xp-track">
+                            <div class="xp-fill" id="xpFill" style="width:0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stat cards -->
+                <div class="stats-row">
+                    <div class="scard">
+                        <div class="scard-ico g"><svg viewBox="0 0 24 24">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg></div>
+                        <div class="scard-val" id="sToday">0/0</div>
+                        <div class="scard-lbl" data-i18n="statToday"></div>
+                    </div>
+                    <div class="scard">
+                        <div class="scard-ico a"><svg viewBox="0 0 24 24">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                            </svg></div>
+                        <div class="scard-val" id="sStreak">0</div>
+                        <div class="scard-lbl" data-i18n="statStreak"></div>
+                    </div>
+                    <div class="scard">
+                        <div class="scard-ico b"><svg viewBox="0 0 24 24">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                            </svg></div>
+                        <div class="scard-val" id="sWeek">0%</div>
+                        <div class="scard-lbl" data-i18n="statWeek"></div>
+                    </div>
+                    <div class="scard">
+                        <div class="scard-ico p"><svg viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="12" y1="8" x2="12" y2="12" />
+                                <line x1="12" y1="16" x2="12.01" y2="16" />
+                            </svg></div>
+                        <div class="scard-val" id="sTotal">0</div>
+                        <div class="scard-lbl" data-i18n="statTotal"></div>
+                    </div>
+                </div>
+
+                <!-- Week Strip -->
+                <div class="week-card">
+                    <div class="week-hd">
+                        <div class="sec-title" data-i18n="weekTitle" style="margin:0;font-size:12px"></div>
+                        <div style="font-size:12px;color:var(--text3)" id="weekPct"></div>
+                    </div>
+                    <div class="week-days" id="weekDays"></div>
+                </div>
+
+                <!-- Habits section -->
+                <div class="habits-hd">
+                    <div class="habits-hd-l">
+                        <div class="sec-title" data-i18n="habitsTitle" style="margin:0"></div>
+                        <select class="sort-sel" id="sortSel">
+                            <option value="created" data-i18n="sortDate"></option>
+                            <option value="name" data-i18n="sortName"></option>
+                            <option value="streak" data-i18n="sortStreak"></option>
+                            <option value="cat" data-i18n="sortCat"></option>
+                        </select>
+                    </div>
+                    <button class="btn-new" id="btnToggleForm">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        <span data-i18n="btnAdd"></span>
+                    </button>
+                </div>
+
+                <!-- Add Form -->
+                <div class="add-panel" id="addPanel">
+                    <div class="panel-title" data-i18n="formNewTitle"></div>
+                    <div class="frow">
+                        <div class="fg" style="flex:2">
+                            <label data-i18n="fieldName"></label>
+                            <input class="fi" id="fName" maxlength="45">
+                        </div>
+                        <div class="fg" style="flex:0 0 76px">
+                            <label data-i18n="fieldColor"></label>
+                            <input class="fc" id="fColor" type="color" value="#6c5ce7">
+                        </div>
+                    </div>
+
+                    <!-- Group -->
+                    <div style="margin-bottom:14px">
+                        <div class="flabel" data-i18n="fieldGroup"></div>
+                        <div class="group-sel-row" id="fGroupSel"></div>
+                    </div>
+
+                    <!-- Category -->
+                    <div style="margin-bottom:14px">
+                        <div class="flabel" data-i18n="fieldCategory"></div>
+                        <div class="cat-list" id="fCatList"></div>
+                        <div class="add-cat-row">
+                            <input class="add-cat-inp" id="fCatInp" maxlength="20">
+                            <button class="btn-add-cat" id="fCatAdd" data-i18n="btnAddCat"></button>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+
+                    <!-- Frequency -->
+                    <div class="freq-wrap" id="fFreqWrap">
+                        <div class="flabel" data-i18n="fieldFreq"></div>
+                        <div class="freq-type-row">
+                            <button class="freq-type-btn sel" data-ft="daily" data-i18n="freqDaily"></button>
+                            <button class="freq-type-btn" data-ft="days" data-i18n="freqDays"></button>
+                            <button class="freq-type-btn" data-ft="ntimes" data-i18n="freqNtimes"></button>
+                        </div>
+                        <div id="fDaysPicker" style="display:none">
+                            <div class="freq-days-row" id="fDaysBtns"></div>
+                            <div class="freq-hint" id="fDaysHint"></div>
+                        </div>
+                        <div id="fNtimesPicker" style="display:none">
+                            <div class="freq-ntimes-row">
+                                <span class="freq-ntimes-label" data-i18n="freqTimesWeek"></span>
+                                <div class="freq-n-ctrl">
+                                    <button class="freq-n-btn" id="fNminus">−</button>
+                                    <div class="freq-n-val" id="fNval">3</div>
+                                    <button class="freq-n-btn" id="fNplus">+</button>
+                                </div>
+                            </div>
+                            <div class="freq-hint"><span data-i18n="freqAny"></span> <span id="fNhint">3</span> <span
+                                    data-i18n="freqDaysChoice"></span></div>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+
+                    <!-- Note -->
+                    <div class="frow">
+                        <div class="fg">
+                            <label><span data-i18n="fieldNote"></span> <span
+                                    style="color:var(--text3);font-weight:400;text-transform:none"
+                                    data-i18n="fieldNoteOpt"></span></label>
+                            <input class="fi" id="fNote" maxlength="120">
+                        </div>
+                    </div>
+
+                    <!-- Icon -->
+                    <div>
+                        <div class="flabel" data-i18n="fieldIcon"></div>
+                        <div class="icon-grid" id="iconGrid"></div>
+                    </div>
+
+                    <div class="form-foot">
+                        <button class="btn-save" id="btnSave" data-i18n="btnSave"></button>
+                        <button class="btn-cncl" id="btnCancel" data-i18n="btnCancel"></button>
+                        <span class="cc" id="cc">0/45</span>
+                    </div>
+                </div>
+
+                <div class="filter-row" id="filterRow"></div>
+                <div id="hlist"></div>
+
+            </section><!-- /today -->
+
+            <!-- ══════════════════════
+         PAGE: ANALYTICS
+    ══════════════════════ -->
+            <section class="page" id="page-analytics">
+
+                <div class="sec-title" data-i18n="analyticsTitle"></div>
+
+                <!-- Chart tabs: week / month -->
+                <div class="chart-card full" style="margin-bottom:18px">
+                    <div class="chart-title">
+                        <span data-i18n="chartCompletion"></span>
+                        <div class="chart-tabs">
+                            <button class="chart-tab active" data-period="7" data-i18n="tab7d"></button>
+                            <button class="chart-tab" data-period="30" data-i18n="tab30d"></button>
+                        </div>
+                    </div>
+                    <canvas id="lineChart" height="120"></canvas>
+                </div>
+
+                <div class="analytics-grid">
+
+                    <!-- Habit breakdown bars -->
+                    <div class="chart-card">
+                        <div class="chart-title"><span data-i18n="chartBreakdown"></span></div>
+                        <div class="habit-breakdown" id="breakdownList"></div>
+                    </div>
+
+                    <!-- Streak leaders -->
+                    <div class="chart-card">
+                        <div class="chart-title"><span data-i18n="chartStreaks"></span></div>
+                        <div class="streak-list" id="streakList"></div>
+                    </div>
+
+                    <!-- Heatmap -->
+                    <div class="chart-card full">
+                        <div class="chart-title"><span data-i18n="chartHeatmap"></span></div>
+                        <div class="heatmap-grid" id="heatmapGrid"></div>
+                        <div class="heatmap-legend">
+                            <span data-i18n="less"></span>
+                            <div class="hmap-lg" style="background:var(--bg4)"></div>
+                            <div class="hmap-lg hmap-cell l1"></div>
+                            <div class="hmap-lg hmap-cell l2"></div>
+                            <div class="hmap-lg hmap-cell l3"></div>
+                            <div class="hmap-lg hmap-cell l4"></div>
+                            <span data-i18n="more"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </section><!-- /analytics -->
+
+            <!-- ══════════════════════
+         PAGE: GAMIFICATION
+    ══════════════════════ -->
+            <section class="page" id="page-gamification">
+
+                <div class="level-hero">
+                    <div class="lvl-avatar" id="lvlAvatar">🌱</div>
+                    <div class="lvl-info">
+                        <h2 id="lvlTitle"></h2>
+                        <p id="lvlSubtitle"></p>
+                        <div class="lvl-xp-row">
+                            <div class="lvl-xp-bar">
+                                <div class="lvl-xp-fill" id="lvlXpFill" style="width:0%"></div>
+                            </div>
+                            <div class="lvl-xp-text" id="lvlXpText"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sec-title" data-i18n="badgesTitle"></div>
+                <div class="badges-grid" id="badgesGrid"></div>
+
+                <div class="sec-title" data-i18n="activityTitle"></div>
+                <div class="activity-feed" id="activityFeed"></div>
+
+            </section><!-- /gamification -->
+
+            <!-- ══════════════════════
+         PAGE: SETTINGS
+    ══════════════════════ -->
+            <section class="page" id="page-settings">
+
+                <div class="settings-grid">
+
+                    <!-- Export -->
+                    <div class="settings-card">
+                        <div class="settings-title">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
+                            <span data-i18n="exportTitle"></span>
+                        </div>
+                        <button class="export-btn" id="exportCSV">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                                <polyline points="14 2 14 8 20 8" />
+                                <line x1="16" y1="13" x2="8" y2="13" />
+                                <line x1="16" y1="17" x2="8" y2="17" />
+                                <polyline points="10 9 9 9 8 9" />
+                            </svg>
+                            <div class="btn-label">
+                                CSV
+                                <span class="btn-sub" data-i18n="exportCSVSub"></span>
+                            </div>
+                        </button>
+                        <button class="export-btn" id="exportJSON">
+                            <svg viewBox="0 0 24 24">
+                                <polyline points="16 18 22 12 16 6" />
+                                <polyline points="8 6 2 12 8 18" />
+                            </svg>
+                            <div class="btn-label">
+                                JSON Backup
+                                <span class="btn-sub" data-i18n="exportJSONSub"></span>
+                            </div>
+                        </button>
+                        <button class="export-btn" id="importJSON">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                                <polyline points="17 8 12 3 7 8" />
+                                <line x1="12" y1="3" x2="12" y2="15" />
+                            </svg>
+                            <div class="btn-label">
+                                <span data-i18n="importTitle"></span>
+                                <span class="btn-sub" data-i18n="importSub"></span>
+                            </div>
+                        </button>
+                        <input type="file" id="importFile" accept=".json" style="display:none">
+                    </div>
+
+                    <!-- Preferences -->
+                    <div class="settings-card">
+                        <div class="settings-title">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="3" />
+                                <path
+                                    d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
+                            </svg>
+                            <span data-i18n="prefTitle"></span>
+                        </div>
+                        <div class="toggle-row">
+                            <div>
+                                <div class="toggle-label" data-i18n="prefMotivation"></div>
+                                <div class="toggle-sub" data-i18n="prefMotivationSub"></div>
+                            </div>
+                            <button class="toggle-sw on" id="toggleMotivation"></button>
+                        </div>
+                        <div class="toggle-row">
+                            <div>
+                                <div class="toggle-label" data-i18n="prefConfetti"></div>
+                                <div class="toggle-sub" data-i18n="prefConfettiSub"></div>
+                            </div>
+                            <button class="toggle-sw on" id="toggleConfetti"></button>
+                        </div>
+                        <div class="toggle-row">
+                            <div>
+                                <div class="toggle-label" data-i18n="prefGroups"></div>
+                                <div class="toggle-sub" data-i18n="prefGroupsSub"></div>
+                            </div>
+                            <button class="toggle-sw on" id="toggleGroups"></button>
+                        </div>
+                    </div>
+
+                    <!-- Recommendations -->
+                    <div class="settings-card full">
+                        <div class="settings-title">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M9 3a5 5 0 015 5v1a5 5 0 01-5 5H8a5 5 0 01-5-5 5 5 0 015-5h1zM15 3a5 5 0 015 5 5 5 0 01-5 5h-1" />
+                                <line x1="12" y1="14" x2="12" y2="21" />
+                            </svg>
+                            <span data-i18n="recsTitle"></span>
+                        </div>
+                        <div class="recs-list" id="recsList"></div>
+                    </div>
+
+                </div>
+            </section><!-- /settings -->
+
+        </div><!-- /main -->
+    </div><!-- /app-wrap -->
+
+    <!-- ════════════════════════════════
+     EDIT MODAL
+════════════════════════════════ -->
+    <div class="modal-ov" id="editModal">
+        <div class="modal">
+            <div class="modal-hd">
+                <div class="modal-title" data-i18n="modalEditTitle"></div>
+                <button class="icon-btn" id="btnCloseModal">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="frow">
+                <div class="fg" style="flex:2"><label data-i18n="fieldName"></label><input class="fi" id="eName"
+                        maxlength="45"></div>
+                <div class="fg" style="flex:0 0 76px"><label data-i18n="fieldColor"></label><input class="fc"
+                        id="eColor" type="color"></div>
+            </div>
+
+            <!-- Group -->
+            <div style="margin-bottom:14px">
+                <div class="flabel" data-i18n="fieldGroup"></div>
+                <div class="group-sel-row" id="eGroupSel"></div>
+            </div>
+
+            <div style="margin-bottom:14px">
+                <div class="flabel" data-i18n="fieldCategory"></div>
+                <div class="cat-list" id="eCatList"></div>
+                <div class="add-cat-row">
+                    <input class="add-cat-inp" id="eCatInp" maxlength="20">
+                    <button class="btn-add-cat" id="eCatAdd" data-i18n="btnAddCat"></button>
+                </div>
+            </div>
+            <div class="divider"></div>
+
+            <div class="freq-wrap" id="eFreqWrap">
+                <div class="flabel" data-i18n="fieldFreq"></div>
+                <div class="freq-type-row">
+                    <button class="freq-type-btn" data-ft="daily" data-i18n="freqDaily"></button>
+                    <button class="freq-type-btn" data-ft="days" data-i18n="freqDays"></button>
+                    <button class="freq-type-btn" data-ft="ntimes" data-i18n="freqNtimes"></button>
+                </div>
+                <div id="eDaysPicker" style="display:none">
+                    <div class="freq-days-row" id="eDaysBtns"></div>
+                    <div class="freq-hint" id="eDaysHint"></div>
+                </div>
+                <div id="eNtimesPicker" style="display:none">
+                    <div class="freq-ntimes-row">
+                        <span class="freq-ntimes-label" data-i18n="freqTimesWeek"></span>
+                        <div class="freq-n-ctrl">
+                            <button class="freq-n-btn" id="eNminus">−</button>
+                            <div class="freq-n-val" id="eNval">3</div>
+                            <button class="freq-n-btn" id="eNplus">+</button>
+                        </div>
+                    </div>
+                    <div class="freq-hint"><span data-i18n="freqAny"></span> <span id="eNhint">3</span> <span
+                            data-i18n="freqDaysChoice"></span></div>
+                </div>
+            </div>
+            <div class="divider"></div>
+
+            <div class="frow">
+                <div class="fg"><label data-i18n="fieldNote"></label><input class="fi" id="eNote" maxlength="120"></div>
+            </div>
+            <div>
+                <div class="flabel" data-i18n="fieldIcon"></div>
+                <div class="icon-grid" id="editIconGrid"></div>
+            </div>
+            <div class="form-foot" style="margin-top:20px">
+                <button class="btn-save" id="btnEditSave" data-i18n="btnSave"></button>
+                <button class="btn-cncl" id="btnEditCancel" data-i18n="btnCancel"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════
+     MOTIVATION OVERLAY
+════════════════════════════════ -->
+    <div class="motivation-overlay" id="motivationOverlay">
+        <div class="motivation-card">
+            <span class="motive-emoji" id="motiveEmoji">🎉</span>
+            <div class="motive-quote" id="motiveQuote"></div>
+            <div class="motive-sub" id="motiveSub"></div>
+            <button class="motive-close" id="motiveClose" data-i18n="btnContinue"></button>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+</body>
+
+</html>
